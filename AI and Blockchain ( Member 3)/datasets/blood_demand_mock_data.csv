@@ -1,0 +1,201 @@
+Date,City,BloodType,UnitsRequested,EmergencyLevel,Hospital
+2024-12-11,Hubballi,A-,13,Medium,SDM Hospital
+2025-04-11,Hubballi,A+,2,High,SDM Hospital
+2025-06-04,Hubballi,A-,15,Low,SDM Hospital
+2025-02-09,Belagavi,AB+,11,High,Lakeview Hospital
+2025-05-29,Hubballi,A+,5,Medium,KIMS Hubli
+2025-01-25,Mysuru,A-,1,Low,JSS Hospital
+2024-10-20,Belagavi,A+,3,Medium,Lakeview Hospital
+2024-11-29,Hubballi,AB+,5,Medium,SDM Hospital
+2025-02-25,Belagavi,A-,13,Low,Lakeview Hospital
+2024-12-22,Belagavi,AB-,10,Medium,Lakeview Hospital
+2025-09-05,Mysuru,B-,5,Medium,Columbia Asia
+2024-12-07,Bengaluru,AB-,4,Low,Apollo
+2025-04-01,Mangaluru,AB-,11,Low,KMC Hospital
+2024-11-17,Bengaluru,B-,11,Low,Fortis
+2025-05-15,Mangaluru,AB-,1,High,KMC Hospital
+2024-11-09,Hubballi,O+,2,High,KIMS Hubli
+2025-03-11,Belagavi,B+,3,Low,Lakeview Hospital
+2025-01-19,Hubballi,A+,2,Medium,SDM Hospital
+2025-08-12,Bengaluru,A+,11,High,Fortis
+2024-12-20,Belagavi,A-,7,Low,KLES Dr. Prabhakar Kore Hospital
+2025-03-21,Mangaluru,A+,12,Low,AJ Hospital
+2024-12-12,Bengaluru,AB-,4,High,Fortis
+2025-06-10,Bengaluru,B+,5,Low,Fortis
+2025-01-18,Bengaluru,AB+,9,Medium,Fortis
+2025-08-03,Mysuru,AB-,6,High,Columbia Asia
+2025-01-09,Mangaluru,A+,10,High,AJ Hospital
+2025-06-15,Belagavi,B+,12,Low,Lakeview Hospital
+2024-12-07,Mangaluru,A-,15,High,KMC Hospital
+2025-05-06,Hubballi,AB+,3,Medium,SDM Hospital
+2025-05-21,Belagavi,O-,11,Low,KLES Dr. Prabhakar Kore Hospital
+2025-09-29,Mysuru,A-,2,Low,JSS Hospital
+2024-12-30,Bengaluru,A+,6,Medium,Manipal Hospital
+2024-12-04,Belagavi,O+,13,Medium,Lakeview Hospital
+2025-08-21,Mangaluru,A-,3,High,KMC Hospital
+2024-10-27,Bengaluru,A-,10,Medium,Fortis
+2025-03-27,Belagavi,O+,6,High,KLES Dr. Prabhakar Kore Hospital
+2025-10-01,Belagavi,AB+,7,High,KLES Dr. Prabhakar Kore Hospital
+2025-03-14,Bengaluru,O+,3,Low,Manipal Hospital
+2025-08-25,Mysuru,O+,5,High,JSS Hospital
+2025-02-19,Mysuru,AB-,15,High,JSS Hospital
+2025-09-14,Bengaluru,A-,8,Medium,Manipal Hospital
+2024-12-30,Mangaluru,B-,15,Low,KMC Hospital
+2024-11-22,Hubballi,AB+,5,High,KIMS Hubli
+2025-04-12,Hubballi,O-,5,High,KIMS Hubli
+2025-07-19,Hubballi,AB-,15,Medium,KIMS Hubli
+2025-02-13,Belagavi,O-,9,Medium,KLES Dr. Prabhakar Kore Hospital
+2024-10-21,Mysuru,A+,5,Low,Columbia Asia
+2025-06-14,Bengaluru,B-,8,Low,Fortis
+2025-07-11,Bengaluru,A-,12,High,Fortis
+2024-11-24,Belagavi,A+,15,Medium,Lakeview Hospital
+2025-07-14,Belagavi,AB+,7,Medium,Lakeview Hospital
+2025-08-02,Mysuru,O+,10,Medium,JSS Hospital
+2025-06-14,Mysuru,B+,7,Medium,Columbia Asia
+2025-01-25,Bengaluru,AB+,13,High,Apollo
+2025-03-22,Mysuru,AB-,4,High,JSS Hospital
+2025-07-24,Belagavi,O-,6,Low,Lakeview Hospital
+2024-10-22,Bengaluru,B-,12,High,Manipal Hospital
+2024-10-09,Mangaluru,B+,8,Low,KMC Hospital
+2025-06-05,Hubballi,AB-,5,Low,SDM Hospital
+2025-09-17,Bengaluru,B+,11,High,Fortis
+2025-05-05,Bengaluru,A-,9,Medium,Manipal Hospital
+2025-03-10,Mangaluru,A+,8,High,AJ Hospital
+2025-05-03,Hubballi,AB+,8,High,SDM Hospital
+2025-03-19,Hubballi,B-,2,Medium,SDM Hospital
+2025-07-04,Hubballi,O+,2,High,KIMS Hubli
+2025-08-16,Mangaluru,B+,11,Low,AJ Hospital
+2025-06-08,Bengaluru,B-,8,High,Manipal Hospital
+2025-06-15,Bengaluru,B+,6,Medium,Manipal Hospital
+2024-12-12,Belagavi,B-,12,High,Lakeview Hospital
+2025-02-07,Mysuru,B+,7,Medium,Columbia Asia
+2025-01-25,Mangaluru,AB+,4,Medium,KMC Hospital
+2025-08-11,Hubballi,B+,15,High,SDM Hospital
+2025-05-26,Hubballi,AB-,6,Low,SDM Hospital
+2024-12-27,Mangaluru,A-,12,Low,KMC Hospital
+2025-04-15,Hubballi,AB-,6,High,SDM Hospital
+2025-02-24,Mangaluru,B+,2,Medium,KMC Hospital
+2025-09-15,Belagavi,A-,9,Medium,Lakeview Hospital
+2025-07-21,Mangaluru,B+,15,Medium,KMC Hospital
+2024-10-22,Mangaluru,AB-,5,Medium,KMC Hospital
+2025-05-05,Bengaluru,A-,14,Medium,Manipal Hospital
+2025-07-12,Hubballi,A+,12,Low,SDM Hospital
+2025-05-08,Mangaluru,B-,2,Low,KMC Hospital
+2025-05-20,Hubballi,A+,1,Low,KIMS Hubli
+2025-07-06,Mysuru,B+,7,High,JSS Hospital
+2025-06-27,Mangaluru,A-,15,Low,AJ Hospital
+2025-04-22,Hubballi,A+,13,Medium,KIMS Hubli
+2025-09-04,Hubballi,A-,7,High,SDM Hospital
+2024-12-24,Hubballi,O+,15,Low,KIMS Hubli
+2025-02-01,Bengaluru,O+,8,Low,Manipal Hospital
+2025-09-23,Belagavi,AB+,8,Low,KLES Dr. Prabhakar Kore Hospital
+2025-07-12,Bengaluru,B-,5,Medium,Fortis
+2025-09-17,Mangaluru,AB-,1,Medium,KMC Hospital
+2025-01-30,Mangaluru,O-,3,Medium,AJ Hospital
+2024-12-31,Mysuru,O-,14,Medium,JSS Hospital
+2024-12-07,Belagavi,A+,1,Medium,KLES Dr. Prabhakar Kore Hospital
+2025-09-19,Belagavi,A-,4,Low,KLES Dr. Prabhakar Kore Hospital
+2025-05-25,Bengaluru,B-,9,High,Manipal Hospital
+2025-09-04,Bengaluru,A+,6,Medium,Apollo
+2025-02-19,Belagavi,AB-,3,Low,KLES Dr. Prabhakar Kore Hospital
+2024-10-30,Hubballi,AB-,7,Low,SDM Hospital
+2025-02-02,Bengaluru,A+,1,Low,Apollo
+2024-12-24,Belagavi,O+,2,Low,KLES Dr. Prabhakar Kore Hospital
+2025-07-23,Belagavi,AB-,12,Low,KLES Dr. Prabhakar Kore Hospital
+2024-12-16,Mysuru,A-,11,High,Columbia Asia
+2024-10-09,Hubballi,A+,9,High,SDM Hospital
+2024-12-22,Hubballi,B+,4,Medium,KIMS Hubli
+2025-08-10,Mangaluru,O+,9,Low,AJ Hospital
+2025-02-28,Hubballi,AB+,15,Medium,SDM Hospital
+2025-04-24,Hubballi,O+,13,Low,SDM Hospital
+2025-05-31,Hubballi,AB+,10,High,KIMS Hubli
+2025-06-11,Mangaluru,A+,15,Medium,KMC Hospital
+2024-12-04,Hubballi,A+,8,Medium,SDM Hospital
+2024-10-20,Belagavi,O+,11,Low,Lakeview Hospital
+2024-10-14,Belagavi,O-,4,High,KLES Dr. Prabhakar Kore Hospital
+2025-08-02,Belagavi,A+,5,Low,Lakeview Hospital
+2025-01-20,Mangaluru,O+,11,High,AJ Hospital
+2024-11-07,Belagavi,A-,15,Low,KLES Dr. Prabhakar Kore Hospital
+2024-12-30,Bengaluru,B+,5,Low,Fortis
+2025-05-29,Bengaluru,AB-,1,Medium,Apollo
+2025-01-27,Mangaluru,A+,3,High,KMC Hospital
+2025-04-20,Mangaluru,A+,2,Medium,AJ Hospital
+2025-03-19,Belagavi,B+,14,Low,Lakeview Hospital
+2025-07-02,Belagavi,B+,10,High,Lakeview Hospital
+2025-08-24,Belagavi,O-,14,High,Lakeview Hospital
+2025-05-06,Hubballi,A-,14,High,KIMS Hubli
+2025-04-14,Bengaluru,AB+,3,Medium,Fortis
+2025-07-22,Mysuru,B+,4,Medium,JSS Hospital
+2025-05-24,Belagavi,O+,5,Medium,Lakeview Hospital
+2025-03-06,Bengaluru,AB+,10,Low,Fortis
+2025-03-27,Mangaluru,O+,10,Medium,KMC Hospital
+2024-12-16,Bengaluru,B+,8,Low,Apollo
+2025-06-15,Hubballi,B+,11,Low,SDM Hospital
+2025-05-07,Belagavi,O+,13,Low,Lakeview Hospital
+2024-11-15,Mysuru,A+,10,High,Columbia Asia
+2025-01-14,Mangaluru,A-,2,Low,AJ Hospital
+2025-03-06,Belagavi,A-,15,Medium,KLES Dr. Prabhakar Kore Hospital
+2025-09-22,Bengaluru,AB-,12,High,Apollo
+2025-09-17,Hubballi,B-,3,Medium,KIMS Hubli
+2025-03-01,Belagavi,AB-,10,Medium,KLES Dr. Prabhakar Kore Hospital
+2024-11-13,Bengaluru,O+,6,High,Apollo
+2025-05-07,Mysuru,B-,4,Medium,JSS Hospital
+2024-12-07,Mangaluru,O-,11,Low,KMC Hospital
+2024-10-22,Hubballi,B-,1,Low,SDM Hospital
+2025-08-24,Belagavi,AB-,13,Medium,KLES Dr. Prabhakar Kore Hospital
+2024-10-21,Mysuru,AB-,15,High,JSS Hospital
+2025-05-13,Belagavi,B+,11,High,Lakeview Hospital
+2025-04-26,Hubballi,O+,2,Medium,SDM Hospital
+2024-12-20,Hubballi,AB+,5,Low,KIMS Hubli
+2025-08-14,Mysuru,O+,4,Low,Columbia Asia
+2025-07-20,Belagavi,B+,8,High,KLES Dr. Prabhakar Kore Hospital
+2024-11-26,Hubballi,B-,3,High,KIMS Hubli
+2025-06-18,Bengaluru,B-,13,Medium,Manipal Hospital
+2025-01-10,Bengaluru,O+,6,High,Fortis
+2025-08-30,Hubballi,O-,12,Low,KIMS Hubli
+2024-10-18,Belagavi,O+,1,High,KLES Dr. Prabhakar Kore Hospital
+2025-02-14,Belagavi,O+,12,Medium,KLES Dr. Prabhakar Kore Hospital
+2025-07-18,Mysuru,AB-,15,High,JSS Hospital
+2025-04-23,Hubballi,B-,12,Low,SDM Hospital
+2025-05-24,Mangaluru,A+,8,Medium,KMC Hospital
+2024-12-07,Hubballi,A+,12,High,SDM Hospital
+2025-09-26,Mysuru,B-,13,High,Columbia Asia
+2025-09-12,Mysuru,A+,10,Low,JSS Hospital
+2025-05-05,Mangaluru,B+,7,Medium,AJ Hospital
+2025-06-08,Belagavi,B-,8,High,Lakeview Hospital
+2024-11-26,Bengaluru,AB+,3,High,Fortis
+2025-06-18,Mangaluru,O-,15,High,KMC Hospital
+2024-12-09,Bengaluru,A-,15,High,Manipal Hospital
+2025-03-24,Bengaluru,B-,9,High,Manipal Hospital
+2025-09-11,Belagavi,O+,10,Medium,KLES Dr. Prabhakar Kore Hospital
+2025-05-20,Mangaluru,AB+,3,High,KMC Hospital
+2025-04-02,Bengaluru,O+,6,High,Apollo
+2025-07-06,Belagavi,AB-,13,Medium,KLES Dr. Prabhakar Kore Hospital
+2025-09-14,Hubballi,O+,9,High,KIMS Hubli
+2025-09-17,Mangaluru,O-,11,Low,AJ Hospital
+2025-03-23,Bengaluru,AB+,4,Low,Manipal Hospital
+2025-06-21,Belagavi,A-,9,Low,KLES Dr. Prabhakar Kore Hospital
+2024-10-11,Bengaluru,A+,6,High,Manipal Hospital
+2025-05-13,Bengaluru,B-,8,Low,Manipal Hospital
+2025-05-14,Hubballi,B-,5,Low,KIMS Hubli
+2024-10-17,Mysuru,B+,3,Medium,Columbia Asia
+2025-02-22,Hubballi,B-,2,High,KIMS Hubli
+2024-11-26,Belagavi,A+,5,Low,KLES Dr. Prabhakar Kore Hospital
+2025-06-25,Belagavi,B-,10,Medium,KLES Dr. Prabhakar Kore Hospital
+2025-01-14,Bengaluru,O-,5,Low,Fortis
+2025-08-02,Mangaluru,B-,2,Low,AJ Hospital
+2025-05-29,Belagavi,AB+,5,High,KLES Dr. Prabhakar Kore Hospital
+2024-12-19,Mangaluru,B+,9,Medium,KMC Hospital
+2025-05-25,Mangaluru,O-,2,Low,KMC Hospital
+2024-12-08,Mangaluru,O-,5,Low,AJ Hospital
+2025-07-07,Mangaluru,AB-,4,Medium,KMC Hospital
+2025-09-06,Hubballi,B+,12,Low,KIMS Hubli
+2025-04-12,Mysuru,A+,5,Medium,JSS Hospital
+2025-09-16,Belagavi,B-,8,Medium,Lakeview Hospital
+2024-12-19,Mysuru,O-,1,Low,JSS Hospital
+2025-04-13,Mysuru,B-,12,Low,JSS Hospital
+2024-11-15,Hubballi,B-,9,Medium,SDM Hospital
+2024-11-30,Mangaluru,AB+,15,Low,KMC Hospital
+2025-02-23,Belagavi,A-,2,Medium,KLES Dr. Prabhakar Kore Hospital
+2025-07-01,Mysuru,A-,9,Medium,JSS Hospital
+2024-11-10,Mysuru,B+,13,High,Columbia Asia
