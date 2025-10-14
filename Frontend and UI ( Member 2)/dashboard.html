@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blood-X | Registration Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #16213e 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated background elements */
+    .bg-decoration {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      opacity: 0.1;
+      animation: blob 8s infinite;
+    }
+
+    .blob1 {
+      width: 400px;
+      height: 400px;
+      background: #dc2626;
+      top: -100px;
+      left: -100px;
+      animation-delay: 0s;
+    }
+
+    .blob2 {
+      width: 500px;
+      height: 500px;
+      background: #0ea5e9;
+      bottom: -150px;
+      right: -100px;
+      animation-delay: 2s;
+    }
+
+    @keyframes blob {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(30px, -50px) rotate(180deg); }
+    }
+
+    .header {
+      text-align: center;
+      padding: 4rem 2rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .logo-icon {
+      font-size: 4rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .header h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #dc2626 0%, #f87171 50%, #fca5a5 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -2px;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      color: #a0aec0;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 2rem;
+    }
+
+    .sign-in-btn {
+      background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+      color: white;
+      border: none;
+      padding: 0.9rem 2.5rem;
+      border-radius: 25px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(14, 165, 233, 0.4);
+      font-size: 1rem;
+    }
+
+    .sign-in-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(14, 165, 233, 0.6);
+    }
+
+    .container {
+      display: flex;
+      gap: 2rem;
+      max-width: 1450px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+      justify-content: center;
+      flex-wrap: nowrap;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 249, 255, 0.9) 100%);
+      border-radius: 28px;
+      padding: 2.8rem;
+      flex: 1;
+      max-width: 380px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #dc2626 0%, #f87171 100%);
+      border-radius: 28px 28px 0 0;
+    }
+
+    .form-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+    }
+
+    .form-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 30px 80px rgba(220, 38, 38, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      border-color: rgba(220, 38, 38, 0.3);
+    }
+
+    .form-card h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #0a0e27;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-icon {
+      font-size: 2rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .form-icon1 { animation-delay: 0s; }
+    .form-icon2 { animation-delay: 0.7s; }
+    .form-icon3 { animation-delay: 1.4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .form-subtitle {
+      font-size: 0.9rem;
+      color: #64748b;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-group {
+      margin-bottom: 1.4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #1e293b;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    select {
+      width: 100%;
+      padding: 1rem 1.2rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      background: #f8fafc;
+      color: #0a0e27;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #dc2626;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
+      transform: translateY(-2px);
+    }
+
+    input[readonly] {
+      background-color: #f1f5f9;
+      color: #94a3b8;
+      cursor: default;
+      border-color: #cbd5e1;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 1.2rem;
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.05rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      margin-top: 1.5rem;
+      box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    button[type="submit"]::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(220, 38, 38, 0.6);
+    }
+
+    button[type="submit"]:hover::before {
+      left: 100%;
+    }
+
+    @media (max-width: 1200px) {
+      .container {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 2.2rem;
+      }
+
+      .header p {
+        font-size: 1rem;
+      }
+
+      .container {
+        flex-direction: column;
+        padding: 0 1rem;
+      }
+
+      .form-card {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-decoration">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+  </div>
+
+  <div class="header">
+    <div class="logo-section">
+      <div class="logo-icon">🩸</div>
+    </div>
+    <h1>Blood-X</h1>
+    <p>Save Lives • Build Community • Donate Blood</p>
+    <button id="signInToggle" class="sign-in-btn">Already have an account? Sign In</button>
+  </div>
+
+  <div class="container" role="main">
+    <!-- Hospital Registration -->
+    <form class="form-card" aria-label="Hospital Registration Form" autocomplete="off">
+      <h2><span class="form-icon form-icon1">🏥</span>Hospital</h2>
+      <div class="form-subtitle">Register your hospital</div>
+      
+      <div class="form-group">
+        <label for="hospitalName">Hospital Name</label>
+        <input id="hospitalName" name="hospitalName" type="text" required placeholder="Enter hospital name" />
+      </div>
+
+      <div class="form-group">
+        <label for="hospitalAddress">Address</label>
+        <input id="hospitalAddress" name="hospitalAddress" type="text" required placeholder="Enter hospital address" />
+      </div>
+
+      <div class="form-group">
+        <label for="hospitalContact">Contact Number</label>
+        <input id="hospitalContact" name="hospitalContact" type="text" required placeholder="Phone number" />
+      </div>
+
+      <button type="submit">Register Hospital</button>
+    </form>
+
+    <!-- Blood Bank Registration -->
+    <form class="form-card" aria-label="Blood Bank Registration Form" autocomplete="off">
+      <h2><span class="form-icon form-icon2">🩸</span>Blood Bank</h2>
+      <div class="form-subtitle">Register your blood bank</div>
+      
+      <div class="form-group">
+        <label for="bloodBankName">Blood Bank Name</label>
+        <input id="bloodBankName" name="bloodBankName" type="text" required placeholder="Enter blood bank name" />
+      </div>
+
+      <div class="form-group">
+        <label for="bloodBankAddress">Address</label>
+        <input id="bloodBankAddress" name="bloodBankAddress" type="text" required placeholder="Enter blood bank address" />
+      </div>
+
+      <div class="form-group">
+        <label for="bloodBankContact">Contact Number</label>
+        <input id="bloodBankContact" name="bloodBankContact" type="text" required placeholder="Phone number" />
+      </div>
+
+      <button type="submit">Register Blood Bank</button>
+    </form>
+
+    <!-- Donor Registration -->
+    <form class="form-card" aria-label="Donor Registration Form" autocomplete="off">
+      <h2><span class="form-icon form-icon3">👤</span>Donor</h2>
+      <div class="form-subtitle">Join as a blood donor</div>
+      
+      <div class="form-group">
+        <label for="donorName">Donor Name</label>
+        <input id="donorName" name="donorName" type="text" required placeholder="Full name" />
+      </div>
+
+      <div class="form-group">
+        <label for="donorAge">Age</label>
+        <input id="donorAge" name="donorAge" type="number" min="18" max="100" required placeholder="Age in years" />
+      </div>
+
+      <div class="form-group">
+        <label for="donorGender">Gender</label>
+        <select id="donorGender" name="donorGender" required>
+          <option value="" disabled selected>Select Gender</option>
+          <option>Male</option>
+          <option>Female</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="donorBloodType">Blood Type</label>
+        <select id="donorBloodType" name="donorBloodType" required>
+          <option value="" disabled selected>Select Blood Type</option>
+          <option>A+</option>
+          <option>A-</option>
+          <option>B+</option>
+          <option>B-</option>
+          <option>AB+</option>
+          <option>AB-</option>
+          <option>O+</option>
+          <option>O-</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="donorContact">Contact Number</label>
+        <input id="donorContact" name="donorContact" type="text" required placeholder="Phone number" />
+      </div>
+
+      <div class="form-group">
+        <label for="donorEmail">Email</label>
+        <input id="donorEmail" name="donorEmail" type="email" required placeholder="Email address" />
+      </div>
+
+      <div class="form-group">
+        <label for="donorAddress">Address</label>
+        <input id="donorAddress" name="donorAddress" type="text" required placeholder="Full address" />
+      </div>
+
+      <button type="submit">Register Donor</button>
+    </form>
+  </div>
+
+  <script>
+    const signInToggle = document.getElementById('signInToggle');
+
+    signInToggle.addEventListener('click', () => {
+      window.location.href = 'signin.html';
+    });
+
+    document.querySelectorAll('.signup-link a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = 'dashboard.html';
+      });
+    });
+
+    document.querySelectorAll('form').forEach(form => {
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const title = form.querySelector('h2').textContent.trim().split('\n')[0];
+        alert(`${title} registered successfully! ❤️`);
+        form.reset();
+      });
+    });
+  </script>
+</body>
+</html>

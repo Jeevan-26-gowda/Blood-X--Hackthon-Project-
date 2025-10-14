@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blood-X | Hospital Dashboard</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #16213e 100%);
+      min-height: 100vh;
+      color: #0a0e27;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated background */
+    .bg-decoration {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      opacity: 0.08;
+      animation: blob 8s infinite;
+    }
+
+    .blob1 {
+      width: 500px;
+      height: 500px;
+      background: #dc2626;
+      top: -100px;
+      left: -150px;
+      animation-delay: 0s;
+    }
+
+    .blob2 {
+      width: 400px;
+      height: 400px;
+      background: #0ea5e9;
+      bottom: -100px;
+      right: -100px;
+      animation-delay: 2s;
+    }
+
+    @keyframes blob {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(30px, -50px) rotate(180deg); }
+    }
+
+    /* Navbar */
+    .navbar {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(240, 249, 255, 0.95) 100%);
+      backdrop-filter: blur(20px);
+      border-bottom: 2px solid rgba(220, 38, 38, 0.1);
+      padding: 1.5rem 2rem;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navbar-container {
+      max-width: 1800px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .branding {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #dc2626 0%, #f87171 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+
+    .navbar-right {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .nav-btn {
+      padding: 0.7rem 1.8rem;
+      border: none;
+      border-radius: 25px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    #signOutBtn {
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      color: white;
+      box-shadow: 0 5px 20px rgba(220, 38, 38, 0.3);
+    }
+
+    #signOutBtn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(220, 38, 38, 0.5);
+    }
+
+
+
+
+
+    /* Main container */
+    main {
+      max-width: 1800px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      gap: 3rem;
+    }
+
+    /* Left Panel */
+    .left-panel {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(240, 249, 255, 0.95) 100%);
+      border-radius: 28px;
+      padding: 3rem;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      position: relative;
+      overflow: hidden;
+      height: fit-content;
+      top: 0;
+      sticky: top;
+    }
+
+    .left-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #dc2626 0%, #f87171 100%);
+      border-radius: 28px 28px 0 0;
+    }
+
+    .left-panel::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(220, 38, 38, 0.08) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(30px);
+    }
+
+    .left-panel h2 {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #dc2626;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel-icon {
+      font-size: 2.2rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .hospital-info {
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 2px solid #fca5a5;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hospital-info-label {
+      font-size: 0.8rem;
+      color: #991b1b;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .hospital-info-value {
+      font-size: 1.2rem;
+      color: #7c2d12;
+      font-weight: 700;
+    }
+
+    .form-group {
+      margin-bottom: 1.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #1e293b;
+      margin-bottom: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    input[type=text],
+    input[type=number],
+    select {
+      width: 100%;
+      padding: 1.1rem 1.3rem;
+      font-size: 1rem;
+      border-radius: 14px;
+      border: 2px solid #e2e8f0;
+      background: #f8fafc;
+      color: #1e293b;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    input[type=text]:focus,
+    input[type=number]:focus,
+    select:focus {
+      outline: none;
+      border-color: #dc2626;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
+      transform: translateY(-2px);
+    }
+
+    input[readonly] {
+      background: #f3f4f6;
+      color: #9ca3af;
+      cursor: default;
+      border-color: #d1d5db;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      border-radius: 14px;
+      margin: 1.5rem 0;
+      border: 2px solid #fca5a5;
+      position: relative;
+      z-index: 1;
+    }
+
+    input[type=checkbox] {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      accent-color: #dc2626;
+    }
+
+    .checkbox-group label {
+      margin-bottom: 0;
+      text-transform: none;
+      letter-spacing: normal;
+      font-size: 1.05rem;
+      cursor: pointer;
+    }
+
+    button[type=submit] {
+      width: 100%;
+      padding: 1.4rem;
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      color: white;
+      font-weight: 800;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2rem;
+      box-shadow: 0 10px 35px rgba(220, 38, 38, 0.4);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    button[type=submit]::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    button[type=submit]:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(220, 38, 38, 0.6);
+    }
+
+    button[type=submit]:hover::before {
+      left: 100%;
+    }
+
+    button[type=submit]:active {
+      transform: translateY(-2px);
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      top: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      color: #991b1b;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 1.3rem 2rem;
+      border-radius: 14px;
+      box-shadow: 0 10px 40px rgba(220, 38, 38, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 200;
+      text-align: center;
+      border: 2px solid #fca5a5;
+    }
+
+    .notification.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Right Panel */
+    .right-panel {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(240, 249, 255, 0.95) 100%);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      position: relative;
+      min-height: 700px;
+    }
+
+    .right-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #0ea5e9 0%, #06b6d4 100%);
+      border-radius: 28px 28px 0 0;
+    }
+
+    .map-header {
+      padding: 2rem;
+      border-bottom: 2px solid #e2e8f0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .map-header h3 {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #0ea5e9;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .map-header p {
+      color: #64748b;
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+      font-weight: 500;
+    }
+
+    #map {
+      width: 100%;
+      height: calc(100% - 110px);
+      border-radius: 0 0 28px 28px;
+      cursor: grab;
+    }
+
+    #map:active {
+      cursor: grabbing;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .right-panel {
+        min-height: 450px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 0;
+      }
+
+      .navbar-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .left-panel {
+        padding: 2rem;
+      }
+
+      .left-panel h2 {
+        font-size: 1.6rem;
+      }
+
+      main {
+        padding: 0 1rem;
+        margin: 1.5rem auto;
+        gap: 1.5rem;
+      }
+
+      .right-panel {
+        min-height: 350px;
+      }
+
+      .stats-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      input[type=text],
+      input[type=number],
+      select {
+        padding: 0.9rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <div class="bg-decoration">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+  </div>
+
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar-container">
+      <div class="branding">🩸 Blood-X Hospital</div>
+      <div class="navbar-right">
+        <button id="signOutBtn" class="nav-btn" aria-label="Sign Out">Sign Out</button>
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle dark or light theme" title="Toggle theme">🌓</button>
+      </div>
+    </div>
+  </nav>
+
+
+
+  <main>
+    <section class="left-panel" aria-labelledby="requestBloodLabel">
+      <h2 id="requestBloodLabel"><span class="panel-icon">🩸</span> Request Blood</h2>
+      
+      <div class="hospital-info">
+        <div class="hospital-info-label">📍 Current Hospital</div>
+        <div class="hospital-info-value" id="hospitalName"></div>
+      </div>
+
+      <form id="bloodRequestForm" aria-describedby="formHelp" autocomplete="off">
+        <div class="form-group">
+          <label for="hospitalAddress">Hospital Address</label>
+          <input type="text" id="hospitalAddress" name="hospitalAddress" aria-required="true" readonly />
+        </div>
+
+        <div class="form-group">
+          <label for="bloodType">Select Blood Type</label>
+          <select id="bloodType" aria-required="true" required>
+            <option value="">-- Choose blood type --</option>
+            <option value="A+">A+ (Most Common)</option>
+            <option value="A-">A- (Rh Negative)</option>
+            <option value="B+">B+ (Common)</option>
+            <option value="B-">B- (Rh Negative)</option>
+            <option value="AB+">AB+ (Universal Receiver)</option>
+            <option value="AB-">AB- (Rare)</option>
+            <option value="O+">O+ (Universal Donor)</option>
+            <option value="O-">O- (Universal Donor, Rare)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="quantity">Quantity Required (Units)</label>
+          <input type="number" id="quantity" name="quantity" min="1" max="20" value="1" aria-required="true" required />
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="urgentCheck" name="urgentCheck" />
+          <label for="urgentCheck">Mark as Urgent ⚠️</label>
+        </div>
+
+        <button type="submit" aria-label="Send request simultaneously to blood banks and donors">📤 Send Request</button>
+      </form>
+
+      <div class="notification" id="requestNotification" role="alert" aria-live="polite"></div>
+    </section>
+
+    <section class="right-panel" aria-label="Map showing nearest blood bank locations">
+      <div class="map-header">
+        <h3>📍 Nearby Blood Banks & Donors</h3>
+        <p>Real-time locations of available blood sources in your area</p>
+      </div>
+      <div id="map" tabindex="0"></div>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('bloodRequestForm');
+    const notification = document.getElementById('requestNotification');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const themeToggle = document.getElementById('themeToggle');
+    const hospitalNameInput = document.getElementById('hospitalName');
+    const hospitalAddressInput = document.getElementById('hospitalAddress');
+    let map;
+    let hospitalMarker = null;
+    let userLocation = null;
+    let markers = [];
+
+    const signedInHospital = {
+      name: "City General Hospital",
+      address: "1 MG Road, Bangalore, Karnataka, India"
+    };
+
+    function showNotification(message) {
+      notification.textContent = message;
+      notification.classList.add('active');
+      setTimeout(() => {
+        notification.classList.remove('active');
+      }, 4000);
+    }
+
+    async function geocodeAddress(address) {
+      const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.status === 'OK' && data.results[0]) {
+          const loc = data.results[0].geometry.location;
+          return { lat: loc.lat, lng: loc.lng };
+        }
+      } catch (e) {
+        console.log('Geocoding error');
+      }
+      return null;
+    }
+
+    function placeMarker(position, label) {
+      if (hospitalMarker) hospitalMarker.setMap(null);
+      hospitalMarker = new google.maps.Marker({
+        position,
+        map,
+        title: label,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 12,
+          fillColor: '#dc2626',
+          fillOpacity: 1,
+          strokeWeight: 3,
+          strokeColor: '#fff'
+        }
+      });
+    }
+
+    function clearMarkers() {
+      markers.forEach(m => m.setMap(null));
+      markers = [];
+    }
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 13,
+        center: { lat: 12.9716, lng: 77.5946 },
+        gestureHandling: 'greedy',
+        styles: [
+          { elementType: 'geometry', stylers: [{ color: '#f0f4f6' }] },
+          { elementType: 'labels.text.stroke', stylers: [{ color: '#ffffff' }] },
+          { elementType: 'labels.text.fill', stylers: [{ color: '#616161' }] }
+        ]
+      });
+    }
+
+    async function centerOnHospital() {
+      try {
+        userLocation = await geocodeAddress(signedInHospital.address);
+        if (userLocation) {
+          map.setCenter(userLocation);
+          placeMarker(userLocation, 'Hospital Location');
+        }
+      } catch {
+        userLocation = { lat: 12.9716, lng: 77.5946 };
+        map.setCenter(userLocation);
+      }
+    }
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      if (!userLocation) {
+        showNotification('❌ Hospital location not detected. Please reload.');
+        return;
+      }
+      const bloodType = form.bloodType.value;
+      const quantity = form.quantity.value;
+      const urgent = form.urgentCheck.checked;
+      if (!bloodType || quantity < 1) {
+        showNotification('⚠️ Please select a valid blood type and quantity.');
+        return;
+      }
+
+      showNotification(`✅ Request for ${quantity} unit${quantity > 1 ? 's' : ''} of ${bloodType}${urgent ? ' (URGENT)' : ''} sent to blood banks & donors!`);
+      
+      form.bloodType.value = '';
+      form.quantity.value = 1;
+      form.urgentCheck.checked = false;
+    });
+
+    signOutBtn.addEventListener('click', () => {
+      window.location.href = 'dashboard.html';
+    });
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.body.getAttribute('data-theme') === 'dark';
+      document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      themeToggle.setAttribute('aria-pressed', !isDark);
+    });
+
+    window.onload = () => {
+      hospitalNameInput.textContent = signedInHospital.name;
+      hospitalAddressInput.value = signedInHospital.address;
+      initMap();
+      centerOnHospital();
+    };
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvcA-y0247xNDwttlhsAt9rtQ72FArn2o"></script>
+</body>
+</html>
