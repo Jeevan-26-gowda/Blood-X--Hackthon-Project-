@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blood-X | Registration</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #ff4b5c, #ff6f61);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 20px;
+    }
+
+    header img {
+      width: 60px;
+      height: 60px;
+    }
+
+    header h1 {
+      font-size: 32px;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      width: 380px;
+      max-width: 90%;
+    }
+
+    select, input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    select, input {
+      background: rgba(255, 255, 255, 0.8);
+      color: #000;
+    }
+
+    button {
+      background-color: #fff;
+      color: #e63946;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ffb3b3;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="bloodx.png" alt="Blood-X Logo" onerror="this.style.display='none';">
+    <h1>Blood-X Registration</h1>
+  </header>
+
+  <div class="container">
+    <form id="registerForm">
+      <label>User Type:</label>
+      <select id="userType" required onchange="toggleFields()">
+        <option value="">-- Select --</option>
+        <option value="hospital">Hospital</option>
+        <option value="bloodbank">Blood Bank</option>
+        <option value="donor">Donor</option>
+      </select>
+
+      <div id="commonFields">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="text" id="phone" placeholder="Phone Number" required>
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+
+      <div id="hospitalFields" style="display:none;">
+        <input type="text" id="address" placeholder="Hospital Address">
+      </div>
+
+      <div id="bloodbankFields" style="display:none;">
+        <input type="text" id="location" placeholder="Blood Bank Location">
+      </div>
+
+      <div id="donorFields" style="display:none;">
+        <input type="number" id="age" placeholder="Age">
+        <input type="text" id="bloodgroup" placeholder="Blood Group (e.g. O+)">
+      </div>
+
+      <button type="button" onclick="registerUser()">Register</button>
+    </form>
+  </div>
+
+  <footer>© 2025 Blood-X | All Rights Reserved</footer>
+
+  <script>
+    function toggleFields() {
+      const userType = document.getElementById('userType').value;
+      document.getElementById('hospitalFields').style.display = (userType === 'hospital') ? 'block' : 'none';
+      document.getElementById('bloodbankFields').style.display = (userType === 'bloodbank') ? 'block' : 'none';
+      document.getElementById('donorFields').style.display = (userType === 'donor') ? 'block' : 'none';
+    }
+
+    async function registerUser() {
+      const userType = document.getElementById('userType').value;
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const password = document.getElementById('password').value;
+      const address = document.getElementById('address')?.value || '';
+      const location = document.getElementById('location')?.value || '';
+      const age = document.getElementById('age')?.value || '';
+      const bloodgroup = document.getElementById('bloodgroup')?.value || '';
+
+      if (!userType) {
+        alert("Please select a user type.");
+        return;
+      }
+
+      try {
+        const res = await fetch('http://localhost:3000/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userType, name, email, phone, password, address, location, age, bloodgroup })
+        });
+
+        const data = await res.json();
+        alert(data.message);
+      } catch (err) {
+        console.error(err);
+        alert("Error connecting to server.");
+      }
+    }
+  </script>
+</body>
+</html>

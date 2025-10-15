@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blood-X | Hospital Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Consistent with bloodbank.html */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fafb;
+      min-height: 100vh;
+      color: #1f2937;
+    }
+
+    .bg-decoration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 240px;
+      height: 100vh;
+      background: #ffffff;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar.hidden {
+      transform: translateX(-240px);
+    }
+
+    .sidebar .branding {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #dc2626;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar .nav-item {
+      padding: 0.8rem;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #4b5563;
+      transition: all 0.3s;
+    }
+
+    .sidebar .nav-item:hover {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    .navbar {
+      background: #ffffff;
+      padding: 1rem 1.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      margin-left: 240px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar-right {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .nav-btn {
+      padding: 0.5rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: #dc2626;
+      color: white;
+    }
+
+    .nav-btn:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    .sidebar-toggle {
+      background: none;
+      color: #4b5563;
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      display: none;
+    }
+
+    main {
+      max-width: 1400px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+      margin-left: 260px;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 1.5rem;
+    }
+
+    .left-panel {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 1rem;
+    }
+
+    .left-panel h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #dc2626;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hospital-info {
+      background: #fff1f2;
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid #fecaca;
+      margin-bottom: 1rem;
+    }
+
+    .hospital-info-label {
+      font-size: 0.75rem;
+      color: #991b1b;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .hospital-info-value {
+      font-size: 0.9rem;
+      color: #1f2937;
+      font-weight: 500;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #4b5563;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    input:focus, select:focus {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+      outline: none;
+    }
+
+    input[readonly] {
+      background: #f3f4f6;
+      color: #9ca3af;
+    }
+
+    .checkbox-group {
+      background: #fff1f2;
+      padding: 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #fecaca;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .checkbox-group label {
+      margin-bottom: 0;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    button[type=submit] {
+      background: #dc2626;
+      color: white;
+      padding: 0.75rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+    }
+
+    button[type=submit]:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    .notification {
+      position: fixed;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff1f2;
+      color: #991b1b;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transition: all 0.4s;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .notification.active {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .right-panel {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+
+    .map-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .map-header h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #0ea5e9;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .map-header p {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 0.3rem;
+    }
+
+    #map {
+      height: 500px;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .loading-spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #dc2626;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      margin: 0.5rem auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 1200px) {
+      main { grid-template-columns: 1fr; margin-left: 0; }
+      .navbar { margin-left: 0; }
+      .sidebar { transform: translateX(-240px); }
+      .sidebar.hidden { transform: translateX(0); }
+      .sidebar-toggle { display: block; }
+    }
+
+    @media (max-width: 768px) {
+      .left-panel { padding: 1rem; }
+      #map { height: 300px; }
+      .form-group { margin-bottom: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-decoration"></div>
+
+  <div class="sidebar" id="sidebar">
+    <div class="branding"><i class="fas fa-tint"></i> Blood-X</div>
+    <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
+    <div class="nav-item"><i class="fas fa-map"></i> Map</div>
+    <div class="nav-item" onclick="document.getElementById('signOutBtn').click()"><i class="fas fa-sign-out-alt"></i> Sign Out</div>
+  </div>
+
+  <nav class="navbar">
+    <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    <div class="navbar-right">
+      <button id="signOutBtn" class="nav-btn" title="Sign Out"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+      <button id="themeToggle" class="nav-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="left-panel">
+      <h2><i class="fas fa-tint"></i> Request Blood</h2>
+      <div class="form-group">
+        <label for="hospitalSelect">Select Hospital</label>
+        <select id="hospitalSelect" onchange="updateHospitalInfo()"></select>
+        <div id="hospitalLoading" class="loading-spinner"></div>
+      </div>
+      <div class="hospital-info">
+        <div class="hospital-info-label">Current Hospital</div>
+        <div class="hospital-info-value" id="hospitalName"></div>
+      </div>
+      <form id="bloodRequestForm">
+        <div class="form-group">
+          <label for="hospitalAddress">Hospital Address</label>
+          <input type="text" id="hospitalAddress" readonly />
+        </div>
+        <div class="form-group">
+          <label for="bloodType">Select Blood Type</label>
+          <select id="bloodType" required>
+            <option value="">-- Choose blood type --</option>
+            <option value="A+">A+ (Most Common)</option>
+            <option value="A-">A- (Rh Negative)</option>
+            <option value="B+">B+ (Common)</option>
+            <option value="B-">B- (Rh Negative)</option>
+            <option value="AB+">AB+ (Universal Receiver)</option>
+            <option value="AB-">AB- (Rare)</option>
+            <option value="O+">O+ (Universal Donor)</option>
+            <option value="O-">O- (Universal Donor, Rare)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="quantity">Quantity Required (Units)</label>
+          <input type="number" id="quantity" min="1" max="20" value="1" required />
+        </div>
+        <div class="checkbox-group">
+          <input type="checkbox" id="urgentCheck" />
+          <label for="urgentCheck">Mark as Urgent ⚠️</label>
+        </div>
+        <button type="submit" title="Send Request">📤 Send Request</button>
+      </form>
+      <div class="notification" id="requestNotification"></div>
+    </section>
+
+    <section class="right-panel">
+      <div class="map-header">
+        <h3><i class="fas fa-map"></i> Nearby Blood Banks & Donors</h3>
+        <p>Real-time locations of available blood sources</p>
+      </div>
+      <div id="map"></div>
+    </section>
+  </main>
+
+  <script>
+    let signedInHospital = null;
+    let SIGNED_IN_HOSPITAL_ID = null;
+    let map, hospitalMarker, markers = [];
+
+    async function loadHospitals() {
+      document.getElementById('hospitalLoading').style.display = 'block';
+      try {
+        const res = await fetch('/api/hospitals');
+        if (!res.ok) throw new Error('Failed to fetch hospitals');
+        const hospitals = await res.json();
+        const hospitalSelect = document.getElementById('hospitalSelect');
+        hospitalSelect.innerHTML = '<option value="">-- Select Hospital --</option>';
+        hospitals.forEach(hospital => {
+          const option = document.createElement('option');
+          option.value = hospital.id;
+          option.textContent = hospital.name;
+          option.dataset.address = hospital.address;
+          option.dataset.contact = hospital.contact;
+          hospitalSelect.appendChild(option);
+        });
+      } catch (e) {
+        console.error('Error loading hospitals:', e);
+        showNotification('Failed to load hospitals. Please try again.');
+      } finally {
+        document.getElementById('hospitalLoading').style.display = 'none';
+      }
+    }
+
+    async function updateHospitalInfo() {
+      const select = document.getElementById('hospitalSelect');
+      const selectedOption = select.options[select.selectedIndex];
+      signedInHospital = {
+        id: select.value,
+        name: selectedOption.text,
+        address: selectedOption.dataset.address || 'N/A',
+        contact: selectedOption.dataset.contact || 'N/A'
+      };
+      SIGNED_IN_HOSPITAL_ID = select.value;
+      document.getElementById('hospitalName').textContent = signedInHospital.name || 'N/A';
+      document.getElementById('hospitalAddress').value = signedInHospital.address;
+      if (signedInHospital.address) {
+        const loc = await geocodeAddress(signedInHospital.address);
+        if (loc) {
+          map.setCenter(loc);
+          placeMarker(loc, signedInHospital.name);
+        }
+      }
+    }
+
+    async function geocodeAddress(address) {
+      const apiKey = 'YOUR_GOOGLE_MAPS_API_KEY_HERE';
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.status === 'OK' && data.results[0]) {
+          return data.results[0].geometry.location;
+        }
+      } catch (e) {
+        console.error('Geocoding error:', e);
+      }
+      return { lat: 12.9716, lng: 77.5946 };
+    }
+
+    function placeMarker(position, label) {
+      if (hospitalMarker) hospitalMarker.setMap(null);
+      hospitalMarker = new google.maps.Marker({
+        position,
+        map,
+        title: label,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 8,
+          fillColor: '#dc2626',
+          fillOpacity: 1,
+          strokeWeight: 2,
+          strokeColor: '#fff'
+        }
+      });
+    }
+
+    function initMap() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 13,
+        center: { lat: 12.9716, lng: 77.5946 },
+        gestureHandling: 'greedy',
+        styles: [
+          { elementType: 'geometry', stylers: [{ color: '#f3f4f6' }] },
+          { elementType: 'labels.text.stroke', stylers: [{ color: '#ffffff' }] },
+          { elementType: 'labels.text.fill', stylers: [{ color: '#4b5563' }] }
+        ]
+      });
+    }
+
+    const form = document.getElementById('bloodRequestForm');
+    const notification = document.getElementById('requestNotification');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const bloodType = form.bloodType.value;
+      const quantity = form.quantity.value;
+      const urgent = form.urgentCheck.checked;
+
+      if (!SIGNED_IN_HOSPITAL_ID || !bloodType || quantity < 1) {
+        showNotification('Please select a hospital, valid blood type, and quantity.');
+        return;
+      }
+
+      const data = {
+        hospital_id: SIGNED_IN_HOSPITAL_ID,
+        blood_type: bloodType,
+        quantity: parseInt(quantity),
+        urgent
+      };
+
+      try {
+        const res = await fetch('/api/blood-requests', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('Failed to send request');
+        showNotification(`Request for ${quantity} unit${quantity > 1 ? 's' : ''} of ${bloodType}${urgent ? ' (Urgent)' : ''} sent!`);
+        form.reset();
+      } catch (e) {
+        console.error('Error sending request:', e);
+        showNotification('Failed to send request. Please try again.');
+      }
+    });
+
+    function showNotification(message) {
+      notification.textContent = message;
+      notification.classList.add('active');
+      setTimeout(() => notification.classList.remove('active'), 4000);
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('hidden');
+    }
+
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      window.location.href = 'dashboard.html';
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark');
+      document.body.style.background = isDark ? '#1f2937' : '#f9fafb';
+      document.getElementById('themeToggle').innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+
+    window.onload = () => {
+      loadHospitals();
+      initMap();
+    };
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAvcA-y0247xNDwttlhsAt9rtQ72FArn2o&callback=initMap"></script>
+</body>
+</html>

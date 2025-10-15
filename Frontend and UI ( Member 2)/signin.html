@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blood-X | Sign In</title>
+  <style>
+    /* (Your same beautiful CSS here — unchanged) */
+  </style>
+</head>
+<body>
+  <div class="bg-decoration">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+  </div>
+
+  <div class="header">
+    <div class="logo-section">
+      <div class="logo-icon">🩸</div>
+    </div>
+    <h1>Blood-X Sign In</h1>
+  </div>
+
+  <div class="signin-container">
+    <!-- Hospital Login -->
+    <div class="signin-card">
+      <h2 class="card-title"><span class="card-icon">🏥</span> Hospital Sign In</h2>
+      <p class="card-subtitle">Access your hospital dashboard</p>
+      <form id="hospitalForm">
+        <div class="error-message" id="hospitalError"></div>
+        <div class="form-group">
+          <label for="hospitalEmail">Hospital Email</label>
+          <input type="email" id="hospitalEmail" name="hospitalEmail" required placeholder="Enter your hospital email" />
+        </div>
+        <div class="form-group">
+          <label for="hospitalPassword">Password</label>
+          <input type="password" id="hospitalPassword" name="hospitalPassword" required placeholder="Enter your password" />
+        </div>
+        <button type="submit">Sign In</button>
+        <div class="signup-link">
+          Don't have an account? <a href="dashboard.html">Register here</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Blood Bank Login -->
+    <div class="signin-card bloodbank-card">
+      <h2 class="card-title"><span class="card-icon">🩸</span> Blood Bank Sign In</h2>
+      <p class="card-subtitle">Access your blood bank dashboard</p>
+      <form id="bloodbankForm">
+        <div class="error-message bloodbank" id="bloodbankError"></div>
+        <div class="form-group">
+          <label for="bloodbankEmail">Blood Bank Email</label>
+          <input type="email" id="bloodbankEmail" name="bloodbankEmail" required placeholder="Enter your blood bank email" />
+        </div>
+        <div class="form-group">
+          <label for="bloodbankPassword">Password</label>
+          <input type="password" id="bloodbankPassword" name="bloodbankPassword" required placeholder="Enter your password" />
+        </div>
+        <button type="submit">Sign In</button>
+        <div class="signup-link">
+          Don't have an account? <a href="dashboard.html">Register here</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function displayError(errorDiv, message) {
+      errorDiv.style.display = 'block';
+      errorDiv.textContent = `❌ ${message}`;
+      setTimeout(() => {
+        errorDiv.style.display = 'none';
+      }, 4000);
+    }
+
+    async function handleLogin(endpoint, email, password, errorDiv, successRedirect) {
+      try {
+        const response = await fetch(`http://localhost:3000${endpoint}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          if (successRedirect === 'hospital.html') {
+            localStorage.setItem('hospitalLoggedIn', 'true');
+            localStorage.setItem('hospitalName', data.name);
+          } else {
+            localStorage.setItem('bloodbankLoggedIn', 'true');
+            localStorage.setItem('bloodbankName', data.name);
+          }
+          window.location.href = successRedirect;
+        } else {
+          displayError(errorDiv, data.message || 'Invalid credentials');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        displayError(errorDiv, 'Cannot connect to server. Please check your backend.');
+      }
+    }
+
+    document.getElementById('hospitalForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('hospitalEmail').value;
+      const password = document.getElementById('hospitalPassword').value;
+      const errorDiv = document.getElementById('hospitalError');
+      await handleLogin('/loginhospital', email, password, errorDiv, 'hospital.html');
+    });
+
+    document.getElementById('bloodbankForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('bloodbankEmail').value;
+      const password = document.getElementById('bloodbankPassword').value;
+      const errorDiv = document.getElementById('bloodbankError');
+      await handleLogin('/loginbloodbank', email, password, errorDiv, 'bloodbank.html');
+    });
+  </script>
+</body>
+</html>

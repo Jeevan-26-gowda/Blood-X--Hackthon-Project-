@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blood-X | Blood Bank Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fafb;
+      min-height: 100vh;
+      color: #1f2937;
+    }
+
+    .bg-decoration {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(135deg, #f9fafb 0%, #e5e7eb 100%);
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 240px;
+      height: 100vh;
+      background: #ffffff;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar.hidden {
+      transform: translateX(-240px);
+    }
+
+    .sidebar .branding {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #dc2626;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar .nav-item {
+      padding: 0.8rem;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #4b5563;
+      transition: all 0.3s;
+    }
+
+    .sidebar .nav-item:hover {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    .navbar {
+      background: #ffffff;
+      padding: 1rem 1.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      margin-left: 240px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar-right {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .nav-btn {
+      padding: 0.5rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: #dc2626;
+      color: white;
+    }
+
+    .nav-btn:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    .sidebar-toggle {
+      background: none;
+      color: #4b5563;
+      font-size: 1.2rem;
+      padding: 0.5rem;
+      display: none;
+    }
+
+    main {
+      max-width: 1400px;
+      margin: 1.5rem auto;
+      padding: 0 1.5rem;
+      margin-left: 260px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .bloodbank-info {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      margin-bottom: 1.5rem;
+    }
+
+    .bloodbank-info h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #dc2626;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    .info-item {
+      background: #fff1f2;
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid #fecaca;
+    }
+
+    .info-label {
+      font-size: 0.75rem;
+      color: #991b1b;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .info-value {
+      font-size: 0.9rem;
+      color: #1f2937;
+      font-weight: 500;
+    }
+
+    .requests-pane, .donors-pane {
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .requests-pane h2, .donors-pane h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #dc2626;
+      margin-bottom: 1rem;
+    }
+
+    .donors-pane h2 { color: #0ea5e9; }
+
+    .search-wrapper input {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .search-wrapper input:focus {
+      border-color: #dc2626;
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.1);
+      outline: none;
+    }
+
+    .requests-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .requests-table thead {
+      background: #fff1f2;
+      border-bottom: 1px solid #fecaca;
+    }
+
+    .requests-table th {
+      padding: 0.75rem;
+      text-align: left;
+      font-weight: 600;
+      color: #991b1b;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .requests-table td {
+      padding: 0.75rem;
+      font-size: 0.85rem;
+      color: #1f2937;
+    }
+
+    .requests-table tbody tr:hover {
+      background: #f9fafb;
+    }
+
+    .urgent-badge {
+      background: #dc2626;
+      color: white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .action-btn {
+      background: #dc2626;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .action-btn:hover:not(:disabled) {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+
+    .action-btn:disabled {
+      background: #10b981;
+      cursor: not-allowed;
+    }
+
+    .delivery-eta {
+      color: #dc2626;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .donor-item {
+      background: #eff6ff;
+      padding: 0.75rem;
+      border-radius: 6px;
+      border: 1px solid #bfdbfe;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+      transition: all 0.3s;
+    }
+
+    .donor-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .donor-name {
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    .donor-blood-type {
+      background: #0ea5e9;
+      color: white;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .loading-spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #dc2626;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      margin: 0.5rem auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .notification {
+      position: fixed;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff1f2;
+      color: #991b1b;
+      padding: 0.8rem 1.5rem;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transition: all 0.4s;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .notification.active {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 1200px) {
+      main { grid-template-columns: 1fr; margin-left: 0; }
+      .navbar { margin-left: 0; }
+      .sidebar { transform: translateX(-240px); }
+      .sidebar.hidden { transform: translateX(0); }
+      .sidebar-toggle { display: block; }
+    }
+
+    @media (max-width: 768px) {
+      .info-grid { grid-template-columns: 1fr; }
+      .requests-table th, .requests-table td { font-size: 0.75rem; padding: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-decoration"></div>
+
+  <div class="sidebar" id="sidebar">
+    <div class="branding"><i class="fas fa-tint"></i> Blood-X</div>
+    <div class="nav-item"><i class="fas fa-home"></i> Dashboard</div>
+    <div class="nav-item"><i class="fas fa-users"></i> Donors</div>
+    <div class="nav-item" onclick="document.getElementById('signOutBtn').click()"><i class="fas fa-sign-out-alt"></i> Sign Out</div>
+  </div>
+
+  <nav class="navbar">
+    <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    <div class="navbar-right">
+      <button id="signOutBtn" class="nav-btn" title="Sign Out"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+      <button id="themeToggle" class="nav-btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+    </div>
+  </nav>
+
+  <section class="bloodbank-info">
+    <h2><i class="fas fa-tint"></i> Blood Bank Information</h2>
+    <div class="form-group">
+      <label for="bloodBankSelect">Select Blood Bank</label>
+      <select id="bloodBankSelect" onchange="updateBloodBankInfo()"></select>
+      <div id="bbLoading" class="loading-spinner"></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-item">
+        <div class="info-label">Name</div>
+        <div class="info-value" id="bbName"></div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Address</div>
+        <div class="info-value" id="bbAddress"></div>
+      </div>
+      <div class="info-item">
+        <div class="info-label">Contact</div>
+        <div class="info-value" id="bbContact"></div>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="requests-pane">
+      <h2><i class="fas fa-clipboard-list"></i> Blood Requests</h2>
+      <div class="search-wrapper">
+        <input type="search" id="requestSearch" placeholder="Search by blood type or hospital..." />
+      </div>
+      <table class="requests-table">
+        <thead>
+          <tr>
+            <th>Blood Type</th>
+            <th>Quantity</th>
+            <th>Status</th>
+            <th>Hospital</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="requestsBody"></tbody>
+      </table>
+    </section>
+
+    <section class="donors-pane">
+      <h2><i class="fas fa-users"></i> Active Donors</h2>
+      <div class="donor-list" id="donorList"></div>
+    </section>
+  </main>
+
+  <script>
+    const donors = [
+      { id: 1, name: 'Rohit Sharma', bloodType: 'A+', contact: '9998887776' },
+      { id: 2, name: 'Divya Menon', bloodType: 'O-', contact: '9456123784' },
+      { id: 3, name: 'Anita Shah', bloodType: 'B+', contact: '9876543210' },
+      { id: 4, name: 'Kumar Patel', bloodType: 'AB-', contact: '9234567890' }
+    ];
+
+    let selectedBloodBank = null;
+
+    async function loadBloodBanks() {
+      document.getElementById('bbLoading').style.display = 'block';
+      try {
+        const res = await fetch('/api/bloodbanks');
+        if (!res.ok) throw new Error('Failed to fetch blood banks');
+        const bloodBanks = await res.json();
+        const bloodBankSelect = document.getElementById('bloodBankSelect');
+        bloodBankSelect.innerHTML = '<option value="">-- Select Blood Bank --</option>';
+        bloodBanks.forEach(bank => {
+          const option = document.createElement('option');
+          option.value = bank.id;
+          option.textContent = bank.name;
+          option.dataset.address = bank.address;
+          option.dataset.contact = bank.contact;
+          bloodBankSelect.appendChild(option);
+        });
+      } catch (e) {
+        console.error('Error loading blood banks:', e);
+        showNotification('Failed to load blood banks. Please try again.');
+      } finally {
+        document.getElementById('bbLoading').style.display = 'none';
+      }
+    }
+
+    function updateBloodBankInfo() {
+      const select = document.getElementById('bloodBankSelect');
+      const selectedOption = select.options[select.selectedIndex];
+      selectedBloodBank = {
+        id: select.value,
+        name: selectedOption.text,
+        address: selectedOption.dataset.address || 'N/A',
+        contact: selectedOption.dataset.contact || 'N/A'
+      };
+      document.getElementById('bbName').textContent = selectedBloodBank.name || 'N/A';
+      document.getElementById('bbAddress').textContent = selectedBloodBank.address;
+      document.getElementById('bbContact').textContent = selectedBloodBank.contact;
+    }
+
+    async function fetchBloodRequests() {
+      try {
+        const response = await fetch('/api/blood-requests');
+        if (!response.ok) throw new Error('Failed to fetch requests');
+        const requests = await response.json();
+        renderRequests(requests);
+      } catch (error) {
+        console.error('Error fetching blood requests:', error);
+        showNotification('Failed to load requests. Please try again.');
+      }
+    }
+
+    function renderRequests(requests, filter = '') {
+      const requestsBody = document.getElementById('requestsBody');
+      requestsBody.innerHTML = '';
+      const filtered = filter
+        ? requests.filter(req =>
+            req.blood_type.toLowerCase().includes(filter.toLowerCase()) ||
+            req.hospital_name.toLowerCase().includes(filter.toLowerCase())
+          )
+        : requests;
+      filtered.forEach(req => {
+        const tr = document.createElement('tr');
+        const urgentBadge = req.urgent ? '<span class="urgent-badge">⚠️ URGENT</span>' : '<span style="color: #6b7280; font-weight: 500;">Normal</span>';
+        const etaDisplay = req.eta ? `<br><span class="delivery-eta">ETA: ${req.eta} mins</span>` : '';
+        tr.innerHTML = `
+          <td>${req.blood_type}</td>
+          <td>${req.quantity} units</td>
+          <td>${urgentBadge}</td>
+          <td>${req.hospital_name}</td>
+          <td>
+            ${req.status === 'pending' ? `<button class="action-btn" data-id="${req.id}" title="Accept Request">Accept</button>` : `<button class="action-btn" disabled>✅ Accepted</button>`}
+            ${etaDisplay}
+          </td>
+        `;
+        requestsBody.appendChild(tr);
+      });
+
+      document.querySelectorAll('.action-btn:not(:disabled)').forEach(btn => {
+        btn.onclick = async () => {
+          const id = btn.dataset.id;
+          btn.disabled = true;
+          btn.textContent = 'Processing...';
+          try {
+            const res = await fetch(`/api/blood-requests/${id}/accept`, { method: 'POST' });
+            if (!res.ok) throw new Error('Failed to accept request');
+            btn.textContent = '✅ Accepted';
+            fetchBloodRequests();
+          } catch (e) {
+            console.error('Error accepting request:', e);
+            showNotification('Failed to accept request. Please try again.');
+            btn.disabled = false;
+            btn.textContent = 'Accept';
+          }
+        };
+      });
+    }
+
+    function renderDonors() {
+      const donorList = document.getElementById('donorList');
+      donorList.innerHTML = '';
+      donors.forEach(d => {
+        const div = document.createElement('div');
+        div.className = 'donor-item';
+        div.innerHTML = `<div class="donor-name">${d.name}</div><div class="donor-blood-type">${d.bloodType}</div>`;
+        donorList.appendChild(div);
+      });
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.className = 'notification active';
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      setTimeout(() => notification.remove(), 4000);
+    }
+
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('hidden');
+    }
+
+    document.getElementById('requestSearch').addEventListener('input', () => {
+      fetchBloodRequests();
+    });
+
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark');
+      document.body.style.background = isDark ? '#1f2937' : '#f9fafb';
+      document.getElementById('themeToggle').innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      window.location.href = 'dashboard.html';
+    });
+
+    window.onload = () => {
+      loadBloodBanks();
+      fetchBloodRequests();
+      renderDonors();
+      setInterval(fetchBloodRequests, 3000);
+    };
+  </script>
+</body>
+</html>
